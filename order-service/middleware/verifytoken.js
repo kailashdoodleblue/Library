@@ -1,24 +1,24 @@
 const jwt = require('jsonwebtoken');
-const verifytoken = (req,res,next)=>{
-    try{
-        const token =req.headers.authorization
-        jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
-            if (err){
-                return res.status(401).json({Error : 'Token not valid'})
+const verifytoken = (req, res, next) => {
+    try {
+        const token = req.headers.authorization
+        jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+            if (err) {
+                return res.status(401).json({ Error: 'Token not valid' })
             }
-            else{
-                if(decode.username =="admin"){
+            else {
+                if (decode.username == "admin") {
                     next()
                 }
-                else{
+                else {
                     return res.status(401).json({ error: 'User dont have access' });
                 }
             }
         })
-        
-    }
-    catch(err){
 
     }
+    catch (err) {
+        res.status(400).json({ Error: err.message })
+    }
 }
-module.exports={verifytoken}
+module.exports = { verifytoken }

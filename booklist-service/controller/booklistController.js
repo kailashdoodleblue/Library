@@ -11,8 +11,8 @@ const getAllBooks = async (req, res) => {
 
 const addBooks = async (req, res) => {
     try {
-        const { title, author, publishDate, rack, stock } = req.body;
-        const book = await Book.create({ title, author, publishDate, rack, stock });
+        const books = req.body;
+        const book = await Book.bulkCreate(books);
         res.status(201).json(book);
     } catch (error) {
         res.status(500).json({ error: 'Error adding book' });

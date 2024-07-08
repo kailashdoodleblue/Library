@@ -27,7 +27,7 @@ const editBooks = async (req, res) => {
             await book.update({ title, author, publishDate, rack, stock });
             res.json(book);
         } else {
-            res.status(404).json({ error: 'Book not found' });
+            res.status(400).json({ error: 'Book not found' });
         }
     } catch (error) {
         res.status(500).json({ error: 'Error updating book' });
@@ -50,10 +50,10 @@ const deleteBook =  async (req, res) => {
 
 const reducestock = async (req,res)=>{
     try {
-      const {bookname} = req.body;
+      const {bookID} = req.body;
       
-      console.log(bookname)    
-      const book = await Book.findOne({where:{title:bookname}});
+    //   console.log(bookID)    
+      const book = await Book.findByPk(bookID)
     //   console.log(book) 
       const newvalue = book.stock-1
       console.log(newvalue)

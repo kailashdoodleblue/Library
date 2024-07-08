@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 
-const sendMail = async (userName, bookName, returnDate, email) => {
+const sendMail = async (userName, returnDate, email) => {
   var transporter = nodemailer.createTransport({
     host: 'mail.tempmail.us.com',
     auth: {
@@ -15,7 +15,7 @@ const sendMail = async (userName, bookName, returnDate, email) => {
     to: email,
     subject: 'Order summary',
     text: `Dear ${userName},
-         Your order on Book : ${bookName} and Return Date : ${returnDate}`
+         Your Return Date : ${returnDate}`
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {

@@ -32,8 +32,8 @@ const login =async (req, res) => {
 
 const getAllUser=async(req,res)=>{
     try{
-        const {username}=req.body
-        const users = await User.findOne({where:{username:username}})
+        // const {userID}=req.params.id
+        const users = await User.findByPk(req.params.id)
         // console.log(users)
         res.status(200).json(users)
     }

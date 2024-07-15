@@ -100,4 +100,6 @@ router.put('/payment/:id',order.updateOrderPayment );
 
 router.post('/userorders',verifytoken,order.getOrderByUsername)
 
+router.get('/getalluser/:id',order.getallordersbyuserid);
+
 module.exports = router;

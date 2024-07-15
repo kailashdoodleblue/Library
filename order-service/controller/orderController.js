@@ -2,6 +2,7 @@
 const Order = require('../model/Order');
 const axios = require('axios')
 const sendMail = require('../middleware/mail')
+const sequelize=require('../config/database')
 const addorder = async (req, res) => {
     try {
         const {returnDate, bookID, price, userID } = req.body;
@@ -103,5 +104,15 @@ const getOrderByUsername = async (req, res) => {
     }
 }
 
-module.exports = { addorder, getallorders, updateorder, deleteorder, updateOrderPayment, getOrderByUsername }
+const getallordersbyuserid= async(req,res)=>{
+    try {
+        const users = await sequelize.query(`select users.username,books.title,orders.price,orders.payment,orders.borrowDate,orders.returnDate from orders inner join users on orders.userID=users.id inner join books on books.id=orders.bookID where users.id=${req.params.id}`)
+        res.status(200).json(users)
+    }
+    catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+}
+
+module.exports = { addorder, getallorders, updateorder, deleteorder, updateOrderPayment, getOrderByUsername,getallordersbyuserid }
 
